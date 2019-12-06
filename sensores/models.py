@@ -11,4 +11,10 @@ class Datos(models.Model):
 class Acciones(models.Model):
      pararse = models.IntegerField()
      sentarse = models.IntegerField()
+     avanzar = models.IntegerField()
+     retroceder = models.IntegerField()
+     girarIzquierda = models.IntegerField()
+     girarDerecha = models.IntegerField()
+     saludar = models.IntegerField()
+     bailar = models.IntegerField()
 

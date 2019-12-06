@@ -57,22 +57,53 @@ class ActionResponse(APIView):
         accion = request.GET.get('accion',False)
         """pararse = request.GET.get('pararse',False)
         sentarse = request.GET.get('sentarse',False)"""
+        
+        pararse = 0
+        sentarse = 0
+        retroceder = 0
+        avanzar = 0
+        girarIzquierda = 0
+        girarDerecha = 0
+        saludar = 0
+        bailar = 0
 
-        if(accion == "pararse"):
-            pararse = 1
-            sentarse = 0
-        if(accion == "sentarse"):
-            pararse = 0
-            sentarse = 1
         if(accion == "reinicio"):
             pararse = 0
             sentarse = 0
+            retroceder = 0
+            avanzar = 0
+            girarIzquierda = 0
+            girarDerecha = 0
+            saludar = 0
+            bailar = 0
+        if(accion == "pararse"):
+            pararse = 1
+        if(accion == "sentarse"):
+            sentarse = 1
+        if(accion == "avanzar"):
+            avanzar = 1
+        if(accion == "retroceder"):
+            retroceder = 1
+        if(accion == "girarIzquierda"):
+            girarIzquierda = 1
+        if(accion == "girarDerecha"):
+            girarDerecha = 1
+        if(accion == "saludar"):
+            saludar = 1
+        if(accion == "bailar"):
+            bailar = 1
+        
 
         dt = Acciones.objects.get(id=1)
         dt.pararse = pararse
         dt.sentarse = sentarse
+        dt.retroceder = retroceder
+        dt.avanzar = avanzar
+        dt.girarIzquierda = girarIzquierda
+        dt.girarDerecha = girarDerecha
+        dt.saludar = saludar
+        dt.bailar = bailar
         dt.save()
-
 
         conten = [{
             "Mensaje": "Update Success" 
