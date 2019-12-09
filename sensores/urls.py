@@ -4,18 +4,15 @@ from sensores import views
 
 from rest_framework.authtoken.views import obtain_auth_token
 from sensores import views
-from .views import DatosList
+from .views import DatosList, ReportesList
 
 
 
 urlpatterns = [
     path('datos/', views.DatosList.as_view()),
+    path('reportes/', views.ReportesList.as_view()),
     path('accion/',views.ActionResponse.as_view()),
     path('acciones/', views.AccionesList.as_view()),
-
-    #Token
-    path('token/', views.TokenResponse.as_view(), name='token'),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     
 ]
 

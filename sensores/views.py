@@ -1,9 +1,8 @@
 from rest_framework import viewsets
-
-from .serializers import ProductoSerializer, DatosSerializer, AccionesSerializer
-from .models import Producto
 from .models import Datos
-from .models import Acciones
+from .models import Movimientos
+from .models import Reportes
+from .serializers import DatosSerializer, MovimientosSerializer, ReportesSerializer
 
 from rest_framework import generics
 
@@ -42,13 +41,13 @@ class DatosList(generics.ListCreateAPIView):
     queryset = Datos.objects.all()
     serializer_class = DatosSerializer
 
-class ProductoViewSet(viewsets.ModelViewSet):
-    queryset = Producto.objects.all().order_by('codigo')
-    serializer_class = ProductoSerializer
+class ReportesList(generics.ListCreateAPIView):
+    queryset = Reportes.objects.all()
+    serializer_class = ReportesSerializer
 
 class AccionesList(generics.ListCreateAPIView):
-    queryset = Acciones.objects.all()
-    serializer_class = AccionesSerializer
+    queryset = Movimientos.objects.all()
+    serializer_class = MovimientosSerializer
 
 class ActionResponse(APIView):
 
@@ -94,7 +93,7 @@ class ActionResponse(APIView):
             bailar = 1
         
 
-        dt = Acciones.objects.get(id=1)
+        dt = Movimientos.objects.get(id=1)
         dt.pararse = pararse
         dt.sentarse = sentarse
         dt.retroceder = retroceder

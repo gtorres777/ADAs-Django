@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'ADAS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ADAS',
+        'NAME': 'prueba5',
         'USER': 'root1',
         'PASSWORD': 'tecsup',
         'HOST': 'localhost',
