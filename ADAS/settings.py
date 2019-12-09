@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1ev-fz_9#8g3@2@5nbzjfc*$t-09bd&h36^)t!=2*=)h8sj(8i'
+SECRET_KEY = '1ev-fz_9#8g3@2@5nbzjfc*$t-09bd&h36^)t!=2*=)h8umedsj(8i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.131']
+ALLOWED_HOSTS = ['tux777.pythonanywhere.com']
 
 
 # Application definition
@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'ADAS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'prueba5',
-        'USER': 'root1',
-        'PASSWORD': 'tecsup',
-        'HOST': 'localhost',
+        'NAME': 'tux777$ADAS',
+        'USER': 'tux777',
+        'PASSWORD': 'asdzxcasdzxcasdzxc',
+        'HOST': 'tux777.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
 }
@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
@@ -126,4 +126,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/tux777/ADAs-Django/static'
 CORS_ORIGIN_ALLOW_ALL = True
