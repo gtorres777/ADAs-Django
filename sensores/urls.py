@@ -6,11 +6,13 @@ from rest_framework.authtoken.views import obtain_auth_token
 from sensores import views
 from .views import DatosList, ReportesList
 
+"""path('datos/', views.DatosList.as_view()),
+    path('dato/', views.DataResponse.as_view()),"""
 
 
 urlpatterns = [
+
     path('datos/', views.DatosList.as_view()),
-    path('dato/', views.DataResponse.as_view()),
     path('reportes/', views.ReportesList.as_view()),
     path('reporte/', views.ReportResponse.as_view()),
     path('accion/',views.ActionResponse.as_view()),

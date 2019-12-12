@@ -42,7 +42,7 @@ class TokenResponse(APIView):
         }]
         return Response(content)
 
-class DatosList(APIView):
+"""class DatosList(APIView):
 
     def get(self, request):
 
@@ -52,7 +52,7 @@ class DatosList(APIView):
             "temperatura": dt.temperatura,
             "humedad": dt.humedad
         }]
-        return Response(conten)
+        return Response(conten)"""
 
 """class ReportesList(generics.ListCreateAPIView):
     queryset = Reportes.objects.all()
@@ -179,7 +179,11 @@ class ActionResponse(APIView):
         }]
         return Response(conten)
 
-class DataResponse(APIView):
+class DatosList(generics.ListCreateAPIView):
+    queryset = Datos.objects.all()
+    serializer_class = DatosSerializer
+
+"""class DataResponse(APIView):
 
     def get(self, request):
 
@@ -192,4 +196,4 @@ class DataResponse(APIView):
         conten = [{
             "Mensaje": "Add Success"
         }]
-        return Response(conten)
+        return Response(conten)"""
