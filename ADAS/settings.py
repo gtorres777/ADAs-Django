@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sensores',
     'rest_framework',
+    'oauth2_provider',
     'corsheaders',
 ]
 
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'ADAS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,4 +128,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/tux777/ADAs-Django/static'
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope'},
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 36000,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+}
+
 CORS_ORIGIN_ALLOW_ALL = True
+LOGIN_REDIRECT_URL = 'http://tux777.pythonanywhere.com/o/authorize/?response_type=code&client_id=d0vZvJPYejBKMRO1brP9AmVixfyzD3BBL6ySlj5k&redirect_uri=http%3A%2F%2Ftux777.pythonanywhere.com%2Fcode%2F&scope=write&state=1234zyx&code_challenge=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU&code_challenge_method=S256'

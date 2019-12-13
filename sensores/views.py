@@ -9,8 +9,9 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
-from rest_framework import generics
-
+from rest_framework import generics, permissions, serializers
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
+import oauth2_provider
 #testing
 
 from rest_framework.views import APIView
@@ -22,25 +23,10 @@ from rest_framework.authtoken.models import Token
 
 from rest_framework.decorators import api_view, permission_classes
 
+import requests, json
+import subprocess
+import sys
 
-class TokenResponse(APIView):
-    #permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-
-        temperatura = request.GET['temperatura']
-        humedad = request.GET['humedad']
-
-        datos = Datos.objects.get(id=1)
-        datos.temperatura = temperatura
-        datos.humedad = humedad
-        datos.save()
-
-
-        content = [{
-            "Mensaje": "Update Success"
-        }]
-        return Response(content)
 
 """class DatosList(APIView):
 
@@ -59,7 +45,7 @@ class TokenResponse(APIView):
     serializer_class = ReportesSerializer"""
 
 class ReportesList(APIView):
-
+    permission_classes = [TokenHasReadWriteScope]
     def get(self, request):
 
         dt = Reportes.objects.latest('id')
@@ -81,7 +67,7 @@ class AccionesList(generics.ListCreateAPIView):
     serializer_class = MovimientosSerializer
 
 class ReportResponse(APIView):
-
+    permission_classes = [TokenHasReadWriteScope]
     def get(self, request):
 
         getUsuario = request.GET.get('usuario',False)
@@ -120,7 +106,7 @@ class ReportResponse(APIView):
         return Response(conten)
 
 class ActionResponse(APIView):
-
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
     def get(self, request):
 
         accion = request.GET.get('accion',False)
@@ -136,15 +122,6 @@ class ActionResponse(APIView):
         saludar = 0
         bailar = 0
 
-        if(accion == "reinicio"):
-            pararse = 0
-            sentarse = 0
-            retroceder = 0
-            avanzar = 0
-            girarIzquierda = 0
-            girarDerecha = 0
-            saludar = 0
-            bailar = 0
         if(accion == "pararse"):
             pararse = 1
         if(accion == "sentarse"):
@@ -157,11 +134,6 @@ class ActionResponse(APIView):
             girarIzquierda = 1
         if(accion == "girarDerecha"):
             girarDerecha = 1
-        if(accion == "saludar"):
-            saludar = 1
-        if(accion == "bailar"):
-            bailar = 1
-
 
         dt = Movimientos.objects.get(id=1)
         dt.pararse = pararse
@@ -183,17 +155,83 @@ class DatosList(generics.ListCreateAPIView):
     queryset = Datos.objects.all()
     serializer_class = DatosSerializer
 
-"""class DataResponse(APIView):
-
+class AccionesVIP(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
     def get(self, request):
 
-        getTemperatura = request.GET.get('temperatura',False)
-        getHumedad = request.GET.get('humedad',False)
+        accion = request.GET.get('accion',False)
+        """pararse = request.GET.get('pararse',False)
+        sentarse = request.GET.get('sentarse',False)"""
 
-        dt = Datos(temperatura=getTemperatura, humedad=getHumedad)
+        pararse = 0
+        sentarse = 0
+        retroceder = 0
+        avanzar = 0
+        girarIzquierda = 0
+        girarDerecha = 0
+        saludar = 0
+        bailar = 0
+
+        if(accion == "saludar"):
+            saludar = 1
+        if(accion == "bailar"):
+            bailar = 1
+
+        dt = Movimientos.objects.get(id=1)
+        dt.pararse = pararse
+        dt.sentarse = sentarse
+        dt.retroceder = retroceder
+        dt.avanzar = avanzar
+        dt.girarIzquierda = girarIzquierda
+        dt.girarDerecha = girarDerecha
+        dt.saludar = saludar
+        dt.bailar = bailar
         dt.save()
 
         conten = [{
-            "Mensaje": "Add Success"
+            "Mensaje VIP": "Update Success"
         }]
-        return Response(conten)"""
+        return Response(conten)
+
+class Reinicio(APIView):
+
+    def get(self, request):
+
+        """pararse = request.GET.get('pararse',False)
+        sentarse = request.GET.get('sentarse',False)"""
+
+        pararse = 0
+        sentarse = 0
+        retroceder = 0
+        avanzar = 0
+        girarIzquierda = 0
+        girarDerecha = 0
+        saludar = 0
+        bailar = 0
+
+        dt = Movimientos.objects.get(id=1)
+        dt.pararse = pararse
+        dt.sentarse = sentarse
+        dt.retroceder = retroceder
+        dt.avanzar = avanzar
+        dt.girarIzquierda = girarIzquierda
+        dt.girarDerecha = girarDerecha
+        dt.saludar = saludar
+        dt.bailar = bailar
+        dt.save()
+
+        conten = [{
+            "Mensaje reinicio": "Update Success"
+        }]
+        return Response(conten)
+
+class Code_Success(APIView):
+
+    def get(self,request):
+        code = oauth2_provider.models.get_grant_model().objects.latest('id')
+        conten = [{
+            "Mensaje": "Exitoso",
+            "code": code.code
+        }]
+        return Response(conten)
+
